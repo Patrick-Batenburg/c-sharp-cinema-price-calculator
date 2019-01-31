@@ -7,7 +7,7 @@ namespace cinema_price_calculator
     public class Order
     {
         private List<MovieTicket> tickets;
-
+     
         public Order(int orderNumber)
         {
             this.OrderNumber = orderNumber;
@@ -21,7 +21,65 @@ namespace cinema_price_calculator
 
         public double CalculatePrice()
         {
-            return 0;
+            double ticketPrice = 0;
+            double totalPrice = 0;
+            int numberOfStudents = 0;
+            int numberOfStudentPremium = 0;
+            int numberOfNormal = 0;
+            int numberOfNormalPremium = 0;
+            DateTime dateTime = DateTime.Now;
+
+            foreach (var ticket in tickets)
+            {
+                dateTime = ticket.movieScreening.dateAndTime;
+                ticketPrice = ticket.Price;
+
+                switch (ticket.Type)
+                {
+                    case TicketType.Student:
+                        numberOfStudents++;
+                        break;
+                    case TicketType.PremiumStudent:
+                        numberOfStudentPremium++;
+                        break;
+                    case TicketType.Premium:
+                        numberOfNormalPremium++;
+                        break;
+                    default:
+                        numberOfNormal++;
+                        break;
+                }
+            }
+           
+            //2nd ticket free for students
+            numberOfStudents = (numberOfStudents / 2) + (numberOfStudents % 2);
+            numberOfStudentPremium = (numberOfStudentPremium / 2) + (numberOfStudentPremium % 2);
+
+            //2nd ticket free on weekdays
+            if (dateTime.DayOfWeek == DayOfWeek.Monday ||
+                dateTime.DayOfWeek == DayOfWeek.Tuesday ||
+                dateTime.DayOfWeek == DayOfWeek.Wednesday ||
+                dateTime.DayOfWeek == DayOfWeek.Thursday)
+            {
+                numberOfNormal = (numberOfNormal / 2) + (numberOfNormal % 2);
+                numberOfNormalPremium = (numberOfNormalPremium / 2) + (numberOfNormalPremium % 2);
+            }
+            
+            //calculate totals including premium costs
+            double totalStudentPrice = ((numberOfStudents + numberOfStudentPremium) * ticketPrice) + (numberOfStudentPremium * 2);
+            double totalNormalPrice = ((numberOfNormal + numberOfNormalPremium) * ticketPrice) + (numberOfNormalPremium * 3);
+
+            if ((dateTime.DayOfWeek == DayOfWeek.Friday ||
+                dateTime.DayOfWeek == DayOfWeek.Saturday ||
+                dateTime.DayOfWeek == DayOfWeek.Sunday) &&
+                numberOfNormal + numberOfNormalPremium >= 6
+                )
+            {
+                totalNormalPrice = totalNormalPrice * 0.9;
+            }
+
+            totalPrice = totalNormalPrice + totalStudentPrice;
+            return totalPrice;
         }
 
         public int OrderNumber { get; private set; }

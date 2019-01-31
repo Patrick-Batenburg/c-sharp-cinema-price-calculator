@@ -9,7 +9,7 @@ namespace cinema_price_calculator
         private Movie movie;
 
         // LocalDate date = LocalDate.of(2000, Month.NOVEMBER, 20);
-        private DateTime dateAndTime;
+        public DateTime dateAndTime { get; private set; }
 
         public MovieScreening(Movie movie, DateTime dateAndTime, double pricePerSeat)
         {

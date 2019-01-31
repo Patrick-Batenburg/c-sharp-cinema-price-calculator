@@ -2,7 +2,7 @@
 {
     public class MovieTicket
     {
-        private MovieScreening movieScreening;
+        public MovieScreening movieScreening;
 
         public MovieTicket(MovieScreening movieScreening, TicketType type, int seatRow, int seatNumber)
         {
@@ -10,6 +10,7 @@
             this.Type = type;
             this.SeatRow = seatRow;
             this.SeatNumber = seatNumber;
+            this.Price = movieScreening.PricePerSeat;
         }
 
         public int SeatRow { get; private set; }
