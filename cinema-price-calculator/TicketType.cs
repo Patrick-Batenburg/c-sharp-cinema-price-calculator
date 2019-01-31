@@ -6,6 +6,7 @@ namespace cinema_price_calculator
 {
     public enum TicketType
     {
+        Normal,
         Premium,
         Student,
         PremiumStudent

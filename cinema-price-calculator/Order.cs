@@ -32,7 +32,7 @@ namespace cinema_price_calculator
             int numberOfNormalPremium = 0;
             DateTime dateTime = DateTime.Now;
 
-            foreach (var ticket in tickets)
+            foreach (MovieTicket ticket in tickets)
             {
                 dateTime = ticket.movieScreening.dateAndTime;
                 ticketPrice = ticket.Price;
@@ -47,6 +47,9 @@ namespace cinema_price_calculator
                         break;
                     case TicketType.Premium:
                         numberOfNormalPremium++;
+                        break;
+                    case TicketType.Normal:
+                        numberOfNormal++;
                         break;
                     default:
                         numberOfNormal++;
