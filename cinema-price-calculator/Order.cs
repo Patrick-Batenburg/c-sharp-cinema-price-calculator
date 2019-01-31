@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace cinema_price_calculator
@@ -89,6 +92,34 @@ namespace cinema_price_calculator
             // Bases on the string respresentations of the tickets (toString), write
             // the ticket to a file with naming convention Order_<orderNr>.txt of
             // Order_<orderNr>.json
+            string txtPath = $@"c:\temp\Order_{this.OrderNumber}.txt";
+            string jsonPath = $@"c:\temp\Order_{this.OrderNumber}.json";
+
+            if (exportFormat == TicketExportFormat.Plaintext)
+            {
+                foreach (MovieTicket ticket in tickets)
+                {
+                    if (!File.Exists(txtPath))
+                    {
+                        //Create file to write to
+                        string createText = "Tickets:" + Environment.NewLine;
+                        File.WriteAllText(txtPath, createText);
+                    }
+
+                    //add tickets to created file
+                    string appendText = ticket.ToString() + Environment.NewLine;
+                    File.AppendAllText(txtPath, appendText);
+                }
+            }
+            else if (exportFormat == TicketExportFormat.Json)
+            {
+                //serialize object directly into file stream
+                using (StreamWriter file = File.CreateText(jsonPath))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, tickets);
+                }
+            }
         }
     }
 
