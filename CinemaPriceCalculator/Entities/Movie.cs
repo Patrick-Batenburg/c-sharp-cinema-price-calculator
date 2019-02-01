@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace cinema_price_calculator
+namespace CinemaPriceCalculator.Entities
 {
     public class Movie
     {

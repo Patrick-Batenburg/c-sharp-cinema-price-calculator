@@ -1,12 +1,10 @@
-﻿namespace cinema_price_calculator
+﻿namespace CinemaPriceCalculator.Entities
 {
     public class MovieTicket
     {
-        public MovieScreening movieScreening;
-
         public MovieTicket(MovieScreening movieScreening, TicketType type, int seatRow, int seatNumber)
         {
-            this.movieScreening = movieScreening;
+            this.MovieScreening = movieScreening;
             this.Type = type;
             this.SeatRow = seatRow;
             this.SeatNumber = seatNumber;
@@ -19,11 +17,13 @@
 
         public double Price { get; private set; }
 
-        public TicketType Type { get; set; }
+        public TicketType Type { get; private set; }
+
+        public MovieScreening MovieScreening { get; private set; }
 
         public override string ToString()
         {
-            return $"{movieScreening.ToString()} - row {SeatRow}, seat {SeatNumber} {(Type == TicketType.Premium ? " (Premium)" : (Type == TicketType.PremiumStudent ? " (Premium)" : "") )}";
+            return $"{MovieScreening.ToString()} - row {SeatRow}, seat {SeatNumber} {(Type == TicketType.Premium ? " (Premium)" : (Type == TicketType.PremiumStudent ? " (Premium)" : "") )}";
         }
     }
 

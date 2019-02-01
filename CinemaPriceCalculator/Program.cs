@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace cinema_price_calculator
+namespace CinemaPriceCalculator
 {
     class Program
     {
